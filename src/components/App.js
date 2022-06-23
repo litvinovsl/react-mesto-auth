@@ -3,6 +3,7 @@ import api from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
 import Register from "./Register";
+import Login from "./Login";
 import Header from "./Header";
 import Main from "./Main";
 import EditProfilePopup from "./EditProfilePopup.js";
@@ -144,6 +145,7 @@ function App() {
       <div>
         <Header />
         <Register />
+        <Login />
         <Main
           onCardClick={setSelectedCard}
           onEditProfile={handleEditProfileClick}
