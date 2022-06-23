@@ -1,4 +1,5 @@
 import React from "react";
+import { Route } from 'react-router-dom';
 import api from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
@@ -144,7 +145,9 @@ function App() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
+
         <Header />
+        
         <Main
           onCardClick={setSelectedCard}
           onEditProfile={handleEditProfileClick}

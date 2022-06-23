@@ -1,4 +1,5 @@
 .header__logo{
+    align-self: flex-start;
     width: 142px;
     height: 33px;
 }
