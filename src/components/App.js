@@ -10,6 +10,7 @@ import EditProfilePopup from "./EditProfilePopup.js";
 import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -144,8 +145,6 @@ function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div>
         <Header />
-        <Register />
-        <Login />
         <Main
           onCardClick={setSelectedCard}
           onEditProfile={handleEditProfileClick}

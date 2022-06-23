@@ -48,3 +48,4 @@
 @import url(../blocks/popup/__container/update-avatar/popup__container_update-avatar.css);
 @import url(../blocks/popup/__edit-text/_update-avatar/popup__edit-text_update-avatar.css);
 @import url(../blocks/register/register.css);
+@import url(../blocks/popup/success/success.css);
