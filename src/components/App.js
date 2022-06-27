@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from 'react-router-dom';
+import { Route, Redirect, Switch } from "react-router-dom";
 import api from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
@@ -12,6 +12,8 @@ import EditAvatarPopup from "./EditAvatarPopup.js";
 import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
+import ProtectedRoute from "./ProtectedRoute.js";
+import { register } from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -25,12 +27,14 @@ function App() {
     about: "",
   });
   const [cards, setCards] = React.useState([]);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   React.useEffect(() => {
     api
       .getUserInfo()
       .then((data) => {
         setСurrentUser(data);
+        // console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -68,13 +72,14 @@ function App() {
   }
 
   function handleUpdateAvatar({ avatar }) {
-    api.updateProfileAvatar({ avatar })
-    .catch(err => {
-      console.log(err);
-    })
-    .finally(() => {
-      closeAllPopups();
-    });
+    api
+      .updateProfileAvatar({ avatar })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        closeAllPopups();
+      });
   }
 
   function handleAddPlaceSubmit(data) {
@@ -83,7 +88,7 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
       })
       .finally(() => {
@@ -142,22 +147,80 @@ function App() {
       });
   }
 
+
+
+  function onRegister(email, password) {
+    register(password, email)
+      .then((res) => {
+        console.log(res)
+        if(res) {
+          // history.push('/sign-in');
+        }
+      })
+      .catch(() => {
+      });
+  }
+
+  // function onRegister(password, email){
+  //   register(password, email)
+  //     .then((res) => {
+  //       console.log(res);
+  //     });
+      
+  // }
+
+
+
+
+
+
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-
         <Header />
-        
-        <Main
-          onCardClick={setSelectedCard}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
-          onEditAvatar={handleEditAvatarClick}
-          onCardDelete={handleCardDelete}
-          onCardLike={handleCardLike}
-          cards={cards}
-        />
+        <Switch>
+          <ProtectedRoute
+            onCardClick={setSelectedCard}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardDelete={handleCardDelete}
+            onCardLike={handleCardLike}
+            cards={cards}
+            exact
+            path="/"
+            component={Main}
+            loggedIn={loggedIn}
+          />
+          <Route path="/sign-in">
+            <Login />
+          </Route>
+          <Route path="/sign-up">
+            <Register onRegister={onRegister} />
+          </Route>
+          {/* <ProtectedRoute component={Footer} exact path="/" loggedIn={true} /> */}
+          {/* <Main
+            onCardClick={setSelectedCard}
+            onEditProfile={handleEditProfileClick}
+            onAddPlace={handleAddPlaceClick}
+            onEditAvatar={handleEditAvatarClick}
+            onCardDelete={handleCardDelete}
+            onCardLike={handleCardLike}
+            cards={cards}
+          /> */}
+          {/* <Footer /> */}
+          <Route>
+          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
+        </Route> 
+        </Switch>
         <Footer />
+        <AddPlacePopup
+          onSubmit={handleAddPlaceSubmit}
+          isOpen={isAddPlacePopupOpen}
+          onClose={closeAllPopups}
+        />
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
@@ -169,11 +232,10 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
-        <AddPlacePopup
-          onSubmit={handleAddPlaceSubmit}
-          isOpen={isAddPlacePopupOpen}
-          onClose={closeAllPopups}
-        />
+
+        {/* <Route exact path="/">
+          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
+        </Route>  */}
       </div>
     </CurrentUserContext.Provider>
   );

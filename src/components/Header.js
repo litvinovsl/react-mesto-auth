@@ -14,27 +14,26 @@ function Header() {
   return (
     <>
     <header className="header">
-    <Link className="menu__item" to="/">
-
-      <img className="header__logo" src={headerLogo} alt="лого" />
+      <Link className="menu__item" to="/">
+        <img className="header__logo" src={headerLogo} alt="лого" />
       </Link>
 
       <div className="menu">
-        <Link className="menu__item" to="/log">
+        <Link className="menu__item" to="/sign-in">
           Login
         </Link>
-        <Link className="menu__item" to="/reg">
+        <Link className="menu__item" to="/sign-up">
           Register
         </Link>
       </div>
       
     </header>
-    <Route exact path="/reg">
-        <Register />
-      </Route>
-      <Route exact path="/log">
-        <Login />
-      </Route>
+    <Route exact path="/sign-up">
+      <Register />
+    </Route>
+    <Route exact path="/sign-in">
+      <Login />
+    </Route>
     </>
   );
 }
