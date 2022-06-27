@@ -1,9 +1,12 @@
 import React from "react";
+import { useHistory } from 'react-router-dom';
+import { register } from '../utils/auth';
 
-const Register = ({onRegister}) => {
+const Register = ({onRegister: onRegister}) => {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const history = useHistory();
 
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
@@ -12,12 +15,14 @@ const Register = ({onRegister}) => {
 
   function handlePasswordChange(evt) {
     setPassword(evt.target.value);
+    console.log(password);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    console.log("email: ", email, "pass"::::::::kk)
-    onRegister(email, password);
+    console.log("email: ", email, "pass:", password)
+    console.log(onRegister);
+    onRegister(email, password); 
   }
 
   return (
