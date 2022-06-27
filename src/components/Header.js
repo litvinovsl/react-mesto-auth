@@ -28,12 +28,12 @@ function Header() {
       </div>
       
     </header>
-    <Route exact path="/sign-up">
+    {/* <Route exact path="/sign-up">
       <Register />
     </Route>
     <Route exact path="/sign-in">
       <Login />
-    </Route>
+    </Route> */}
     </>
   );
 }
