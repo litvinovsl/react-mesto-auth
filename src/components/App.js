@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Route, Redirect, Switch, useHistory } from "react-router-dom";
 import api from "../utils/Api.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 import Footer from "./Footer";
@@ -13,7 +13,7 @@ import AddPlacePopup from "./AddPlacePopup.js";
 import ImagePopup from "./ImagePopup";
 import InfoTooltip from "./InfoTooltip";
 import ProtectedRoute from "./ProtectedRoute.js";
-import { register } from '../utils/auth';
+import { register, login, validToken } from '../utils/auth';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -28,6 +28,8 @@ function App() {
   });
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
+  const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const history = useHistory();
 
   React.useEffect(() => {
     api
@@ -58,6 +60,7 @@ function App() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setSelectedCard(null);
+    setInfoTooltipOpen(false);
   }
 
   function handleUpdateUser({ name, about }) {
@@ -107,6 +110,10 @@ function App() {
       });
   }, []);
 
+  React.useEffect(() => {
+    checkToken();
+  })
+
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
@@ -147,17 +154,20 @@ function App() {
       });
   }
 
-
+  // const onRegister = 123;
+  
 
   function onRegister(email, password) {
     register(password, email)
       .then((res) => {
-        console.log(res)
+        setInfoTooltipOpen(true);
+        console.log("ругистрация",res)
         if(res) {
-          // history.push('/sign-in');
+          history.push('/sign-in');
         }
       })
       .catch(() => {
+        setInfoTooltipOpen(true);
       });
   }
 
@@ -169,6 +179,41 @@ function App() {
       
   // }
 
+  function onLogin(email, password) {
+    login(password, email)
+      .then((res) => {
+        console.log("Вход",res);
+        if(res) {
+          setLoggedIn(true);
+          // setUserEmailOnHeader(email);
+          history.push('/');
+          localStorage.setItem('jwt', res.token);
+        }
+      })
+      .catch(() => {
+        // setMessage(false);
+        setInfoTooltipOpen(true);
+      });
+  }
+// console.log('1');
+
+
+function checkToken() {
+  const token = localStorage.getItem('jwt');
+  if(token) {
+    validToken(token)
+    .then((res) => {
+      if(res) {
+        setLoggedIn(true);
+        history.push('/');
+        // setUserEmailOnHeader(res.data.email)
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+}
 
 
 
@@ -195,10 +240,10 @@ function App() {
             loggedIn={loggedIn}
           />
           <Route path="/sign-in">
-            <Login />
+            <Login onLogin={onLogin}/>
           </Route>
           <Route path="/sign-up">
-            <Register onRegister={onRegister} />
+            <Register  onRegister={onRegister}/>
           </Route>
           {/* <ProtectedRoute component={Footer} exact path="/" loggedIn={true} /> */}
           {/* <Main
@@ -232,6 +277,9 @@ function App() {
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
         />
+        <InfoTooltip 
+          isOpen={infoTooltipOpen}
+          onClose={closeAllPopups}/>
 
         {/* <Route exact path="/">
           {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
