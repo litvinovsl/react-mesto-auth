@@ -35,15 +35,15 @@ export const login = (password, email) => {
   })
 }
 
-export const validToken = (token) => {
-  return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/user/me`, {
-    method: 'GET',
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization" : `Bearer ${token}`
-    } 
-  })
-  .then((res) => {
-    return getResponse(res)
-  })
-}
+// export const validToken = (token) => {
+//   return fetch(`https://mesto.nomoreparties.co/v1/cohort-40/user/me`, {
+//     method: 'GET',
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization" : `Bearer ${token}`
+//     } 
+//   })
+//   .then((res) => {
+//     return getResponse(res)
+//   })
+// }

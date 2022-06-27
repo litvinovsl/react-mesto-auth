@@ -110,9 +110,9 @@ function App() {
       });
   }, []);
 
-  React.useEffect(() => {
-    checkToken();
-  })
+  // React.useEffect(() => {
+  //   checkToken();
+  // })
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -198,24 +198,28 @@ function App() {
 // console.log('1');
 
 
-function checkToken() {
-  const token = localStorage.getItem('jwt');
-  if(token) {
-    validToken(token)
-    .then((res) => {
-      if(res) {
-        setLoggedIn(true);
-        history.push('/');
-        // setUserEmailOnHeader(res.data.email)
-      };
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
+// function checkToken() {
+//   const token = localStorage.getItem('jwt');
+//   if(token) {
+//     validToken(token)
+//     .then((res) => {
+//       if(res) {
+//         setLoggedIn(true);
+//         history.push('/');
+//         // setUserEmailOnHeader(res.data.email)
+//       };
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//     });
+//   }
+// }
+
+function logoutProfile() {
+  localStorage.removeItem('jwt');
+  history.push('/sign-in');
+  setLoggedIn(false);
 }
-
-
 
 
 
@@ -224,7 +228,8 @@ function checkToken() {
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
-        <Header />
+        <Header 
+          logoutProfile={logoutProfile} />
         <Switch>
           <ProtectedRoute
             onCardClick={setSelectedCard}
