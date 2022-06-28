@@ -3,11 +3,7 @@ import closeIcon from "../images/Close-Icon.svg";
 import successfully from "../images/successfully.svg"
 import error from "../images/errortool.svg"
 
-
-
 function InfoTooltip(props) {
-  // console.log(massageTooltip)
-  // console.log(props.onClose)
   
   return (
     <section className={`popup ${props.isOpen && "popup_opened"}`}>

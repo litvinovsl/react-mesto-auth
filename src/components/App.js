@@ -158,7 +158,6 @@ function App() {
   function onRegister(email, password) {
     register(password, email)
       .then((res) => {
-        // console.log(res);
         setInfoTooltipOpen(true);
         if(res) {
           history.push('/sign-in');
@@ -187,8 +186,6 @@ function App() {
 
       });
   }
-// console.log('1');
-
 
 function checkToken() {
 
@@ -214,8 +211,6 @@ function logoutProfile() {
   history.push('/sign-in');
   setLoggedIn(false);
 }
-
-// const massageTooltip = '2';
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -243,17 +238,6 @@ function logoutProfile() {
           <Route path="/sign-up">
             <Register  onRegister={onRegister}/>
           </Route>
-          {/* <ProtectedRoute component={Footer} exact path="/" loggedIn={true} /> */}
-          {/* <Main
-            onCardClick={setSelectedCard}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardDelete={handleCardDelete}
-            onCardLike={handleCardLike}
-            cards={cards}
-          /> */}
-          {/* <Footer /> */}
           <Route>
           {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
         </Route> 
@@ -279,10 +263,6 @@ function logoutProfile() {
           isOpen={infoTooltipOpen}
           onClose={closeAllPopups}
           massageTooltip={massageTooltip} />
-
-        {/* <Route exact path="/">
-          {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
-        </Route>  */}
       </div>
     </CurrentUserContext.Provider>
   );

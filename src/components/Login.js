@@ -7,18 +7,15 @@ function Login({onLogin}) {
 
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
-    // console.log(email);
   }
 
   function handlePasswordChange(evt) {
     setPassword(evt.target.value);
-    // console.log(password);
   }
 
   function handleSubmit(evt) {
     evt.preventDefault();
     console.log("email: ", email, "pass:", password)
-    // console.log(onRegister);
     onLogin(email, password); 
   }
   return (

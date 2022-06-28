@@ -1,11 +1,10 @@
 import React from "react";
-import { useHistory, Link } from 'react-router-dom';
+import {  Link } from 'react-router-dom';
 
 const Register = ({onRegister: onRegister}) => {
 
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
-  const history = useHistory();
 
   function handleEmailChange(evt) {
     setEmail(evt.target.value);
