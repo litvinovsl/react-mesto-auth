@@ -1,6 +1,5 @@
 import React from "react";
-import { useHistory } from 'react-router-dom';
-import { register } from '../utils/auth';
+import { useHistory, Link } from 'react-router-dom';
 
 const Register = ({onRegister: onRegister}) => {
 
@@ -33,7 +32,12 @@ const Register = ({onRegister: onRegister}) => {
         <input className="register__input" onChange={handlePasswordChange} placeholder="Пароль" required></input>
         <button className="register__submit">Зарегистрироваться</button>
       </form>
-      <a className="register__link">Уже зарегистрированы? Войти</a>
+      <p className="register__link">
+        Уже зарегистрированы? 
+        <Link className="register__link__login" to="/sign-in">
+          Войти
+        </Link>
+        </p>
     </section>
   );
 }

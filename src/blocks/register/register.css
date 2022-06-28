@@ -56,3 +56,14 @@
     line-height: 17px;
     text-align: center;
 }
+
+.register__link__login{
+    color: #FFF;
+    text-decoration: none;
+    margin-left: 3px;
+    transition: opacity .3s ease-in-out;
+}
+
+.register__link__login:hover {
+    opacity: .6;
+  }
