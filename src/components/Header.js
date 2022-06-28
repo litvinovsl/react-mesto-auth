@@ -21,7 +21,7 @@ function Header({ logoutProfile, userEmail }) {
         </Link>
 
         <div className="menu">
-          <p className="">
+          <p className="menu__link menu__link_email">
             {location.pathname === "/" ? userEmail : ""}
           </p>
           <Link to={
@@ -31,7 +31,7 @@ function Header({ logoutProfile, userEmail }) {
                 ? "/sign-up"
                 : "/sign-in"
           }
-            className="header__link header__link_exit"
+            className="menu__link menu__link_link"
             onClick={location.pathname === "/" ? logoutProfile : () => { }}
           >
             {
