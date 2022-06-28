@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Link, useRouteMatch } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useLocation } from 'react-router';
 import headerLogo from "../images/logo-mesto.svg";
 import Register from "./Register";
