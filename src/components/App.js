@@ -29,6 +29,7 @@ function App() {
   const [cards, setCards] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const [userEmal, setUserEmal] = React.useState("");
   const history = useHistory();
 
   React.useEffect(() => {
@@ -182,12 +183,15 @@ function App() {
   function onLogin(email, password) {
     login(password, email)
       .then((res) => {
-        console.log("Вход",res);
+        // console.log("Вход",res);
         if(res) {
           setLoggedIn(true);
           // setUserEmailOnHeader(email);
           history.push('/');
           localStorage.setItem('jwt', res.token);
+        console.log("Входlllll");
+
+          // console.log(localStorage.getItem('jwt'));
         }
       })
       .catch(() => {
@@ -198,22 +202,40 @@ function App() {
 // console.log('1');
 
 
-// function checkToken() {
-//   const token = localStorage.getItem('jwt');
-//   if(token) {
-//     validToken(token)
-//     .then((res) => {
-//       if(res) {
-//         setLoggedIn(true);
-//         history.push('/');
-//         // setUserEmailOnHeader(res.data.email)
-//       };
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-//   }
-// }
+function checkToken() {
+
+  const token = localStorage.getItem('jwt');
+  if(token) {
+    validToken(token)
+    .then((res) => {
+      // console.log(res.data.email)
+      if(res) {
+        setUserEmal(res.data.email);
+        setLoggedIn(true);
+        history.push('/');
+        console.log('userEmail: ', userEmal);
+      };
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+}
+
+// fetch(`https://auth.nomoreparties.co/users/me`, {
+//     method: 'GET',
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
+//     } 
+//   })
+//   .then((res) => {
+//     // return getResponse(res)
+//   })
+// checkToken();
+React.useEffect(() => {
+  checkToken();
+})
 
 function logoutProfile() {
   localStorage.removeItem('jwt');
@@ -229,7 +251,8 @@ function logoutProfile() {
     <CurrentUserContext.Provider value={currentUser}>
       <div>
         <Header 
-          logoutProfile={logoutProfile} />
+          logoutProfile={logoutProfile}
+          userEmail={userEmal} />
         <Switch>
           <ProtectedRoute
             onCardClick={setSelectedCard}
