@@ -30,6 +30,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const [userEmal, setUserEmal] = React.useState("");
+  const [massageTooltip, setMassageTooltip] = ("");
   const history = useHistory();
 
   React.useEffect(() => {
@@ -37,7 +38,6 @@ function App() {
       .getUserInfo()
       .then((data) => {
         setСurrentUser(data);
-        // console.log(data);
       })
       .catch((err) => {
         console.log(err);
@@ -111,9 +111,9 @@ function App() {
       });
   }, []);
 
-  // React.useEffect(() => {
-  //   checkToken();
-  // })
+  React.useEffect(() => {
+    checkToken();
+  })
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -155,16 +155,14 @@ function App() {
       });
   }
 
-  // const onRegister = 123;
-  
-
   function onRegister(email, password) {
     register(password, email)
       .then((res) => {
+        // console.log(res);
         setInfoTooltipOpen(true);
-        console.log("ругистрация",res)
         if(res) {
           history.push('/sign-in');
+          // setMassageTooltip("")
         }
       })
       .catch(() => {
@@ -172,30 +170,17 @@ function App() {
       });
   }
 
-  // function onRegister(password, email){
-  //   register(password, email)
-  //     .then((res) => {
-  //       console.log(res);
-  //     });
-      
-  // }
-
   function onLogin(email, password) {
     login(password, email)
       .then((res) => {
-        // console.log("Вход",res);
         if(res) {
           setLoggedIn(true);
-          // setUserEmailOnHeader(email);
           history.push('/');
           localStorage.setItem('jwt', res.token);
         console.log("Входlllll");
-
-          // console.log(localStorage.getItem('jwt'));
         }
       })
       .catch(() => {
-        // setMessage(false);
         setInfoTooltipOpen(true);
       });
   }
@@ -208,7 +193,6 @@ function checkToken() {
   if(token) {
     validToken(token)
     .then((res) => {
-      // console.log(res.data.email)
       if(res) {
         setUserEmal(res.data.email);
         setLoggedIn(true);
@@ -222,30 +206,11 @@ function checkToken() {
   }
 }
 
-// fetch(`https://auth.nomoreparties.co/users/me`, {
-//     method: 'GET',
-//     headers: {
-//       "Content-Type": "application/json",
-//       "Authorization" : `Bearer ${localStorage.getItem('jwt')}`
-//     } 
-//   })
-//   .then((res) => {
-//     // return getResponse(res)
-//   })
-// checkToken();
-React.useEffect(() => {
-  checkToken();
-})
-
 function logoutProfile() {
   localStorage.removeItem('jwt');
   history.push('/sign-in');
   setLoggedIn(false);
 }
-
-
-
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
