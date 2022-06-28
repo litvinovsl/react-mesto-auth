@@ -30,7 +30,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [infoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
   const [userEmal, setUserEmal] = React.useState("");
-  const [massageTooltip, setMassageTooltip] = ("");
+  const [massageTooltip, setMassageTooltip] = React.useState(false);
   const history = useHistory();
 
   React.useEffect(() => {
@@ -162,11 +162,12 @@ function App() {
         setInfoTooltipOpen(true);
         if(res) {
           history.push('/sign-in');
-          // setMassageTooltip("")
+          setMassageTooltip(true);
         }
       })
       .catch(() => {
         setInfoTooltipOpen(true);
+        setMassageTooltip(false);
       });
   }
 
@@ -177,11 +178,13 @@ function App() {
           setLoggedIn(true);
           history.push('/');
           localStorage.setItem('jwt', res.token);
-        console.log("Входlllll");
+          setMassageTooltip(true);
         }
       })
       .catch(() => {
         setInfoTooltipOpen(true);
+        setMassageTooltip(false);
+
       });
   }
 // console.log('1');
@@ -212,12 +215,14 @@ function logoutProfile() {
   setLoggedIn(false);
 }
 
+// const massageTooltip = '2';
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div>
         <Header 
           logoutProfile={logoutProfile}
-          userEmail={userEmal} />
+          userEmail={userEmal}  />
         <Switch>
           <ProtectedRoute
             onCardClick={setSelectedCard}
@@ -272,7 +277,8 @@ function logoutProfile() {
         />
         <InfoTooltip 
           isOpen={infoTooltipOpen}
-          onClose={closeAllPopups}/>
+          onClose={closeAllPopups}
+          massageTooltip={massageTooltip} />
 
         {/* <Route exact path="/">
           {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
