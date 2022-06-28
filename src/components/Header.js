@@ -5,7 +5,7 @@ import headerLogo from "../images/logo-mesto.svg";
 import Register from "./Register";
 import Login from "./Login";
 
-function Header({logoutProfile}) {
+function Header({ logoutProfile, userEmail }) {
 
   const location = useLocation();
   // const { path, url } = useRouteMatch();
@@ -21,7 +21,9 @@ function Header({logoutProfile}) {
         </Link>
 
         <div className="menu">
-
+          <p className="">
+            {location.pathname === "/" ? userEmail : ""}
+          </p>
           <Link to={
             location.pathname === "/sign-up"
               ? "/sign-in"
