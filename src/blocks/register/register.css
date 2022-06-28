@@ -6,8 +6,6 @@
     width: 358px;
 }
 
-.register__form {}
-
 .register__title {
     height: 29px;
     align-self: center;
@@ -66,4 +64,25 @@
 
 .register__link__login:hover {
     opacity: .6;
+}
+
+@media screen and (max-width: 400px) {
+    .register__title {
+        height: 24px;
+        font-size: 20px;
+        line-height: 24px;
+        margin-bottom: 40px;
+        margin-top: 40px;
+    }
+    .register__input{
+        width: 260px;
+        font-size: 14px;
+        line-height: 17px;
+    }
+    .register{
+        width: 260px;
+    }
+    .register__submit{
+        margin-top: 143px;
+    }
   }

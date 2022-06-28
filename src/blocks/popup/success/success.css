@@ -17,3 +17,12 @@
     margin-top: 32px;
     color: black;
 }
+
+@media screen and (max-width: 400px) {
+    .success-text {
+        font-size: 20px;
+        line-height: 24px;
+        width: 244px;
+    }
+
+  }
