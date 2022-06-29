@@ -113,7 +113,7 @@ function App() {
 
   React.useEffect(() => {
     checkToken();
-  })
+  }, [loggedIn])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
@@ -180,7 +180,7 @@ function checkToken() {
         setUserEmal(res.data.email);
         setLoggedIn(true);
         history.push('/');
-        console.log('userEmail: ', userEmal);
+        // console.log('userEmail: ', userEmal);
       };
     })
     .catch((err) => {
