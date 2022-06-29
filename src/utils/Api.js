@@ -78,6 +78,14 @@ class Api {
         }).then(this._checkReply);
     }
 
+    setCardLike(cardId, checkLike) {
+        const newUrl = this._baseUrl + `/cards/likes/${cardId}`;
+        return fetch(newUrl, {
+            method: checkLike ? 'DELETE' : 'PUT',
+            headers: this._headers,
+        }).then(this._checkReply);
+    }
+
     
 
     deleteCard(cardId) {
