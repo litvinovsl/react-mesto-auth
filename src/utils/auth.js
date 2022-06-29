@@ -16,7 +16,7 @@ export const register = (password, email) => {
     },
     body: JSON.stringify({ password, email }),
   }).then((res) => {
-    console.log(res);
+    // console.log(res);
     return getResponse(res);
   });
 };
